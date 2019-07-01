@@ -230,8 +230,6 @@ rm -rf /usr/local/bin/Caddyfile
 rm -rf /usr/local/bin/caddy
 rm -rf /etc/systemd/system/caddy.service
 
-fi
-
 clear
 echo "----------------------------------------------------------"
 echo ""
@@ -240,6 +238,10 @@ echo ""
 echo "关联项目：https://c2ray.ml"
 echo ""
 echo "----------------------------------------------------------"
+
+fi
+
+
 
 main
 
