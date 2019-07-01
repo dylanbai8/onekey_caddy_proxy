@@ -22,7 +22,7 @@ port="443"
 
 rm -rf local_ip.txt && touch local_ip.txt
 echo `curl -4 ip.sb` >> local_ip.txt && sed -i "s/\./\-/g" "local_ip.txt"
-[[ -z ${domain} ]] && domain="$(cat local_ip.txt).ip.c2ray.ml:${port}" && rm -rf local_ip.txt
+[[ -z ${domain} ]] && domain="$(cat local_ip.txt).ip.c2ray.ml" && rm -rf local_ip.txt
 
 website="$4"
 
@@ -58,7 +58,7 @@ config_caddy(){
 touch /usr/local/bin/Caddyfile
 
 cat <<EOF > /usr/local/bin/Caddyfile
-${domain}{
+${domain}:${port}{
 tls admin@${domain}
 root /www
 gzip
@@ -102,7 +102,8 @@ systemctl enable caddy
 #安装伪装网站
 website_caddy(){
 
-rm -rf /www && mkdir /www
+rm -rf /www
+mkdir /www
 
 wget -c -r -np -k -L -p ${website}
 
