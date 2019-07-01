@@ -11,7 +11,7 @@ set_proxy_info(){
 
 user="$1"
 
-[[ -z ${user} ]] && user="username"
+[[ -z ${user} ]] && user="admin"
 
 pass="$2"
 
@@ -20,7 +20,8 @@ pass="$2"
 domain="$3"
 port="443"
 
-touch local_ip.txt && echo `curl -4 ip.sb` >> local_ip.txt && sed "s/\./-/" local_ip.txt
+rm -rf local_ip.txt && touch local_ip.txt
+echo `curl -4 ip.sb` >> local_ip.txt && sed -i "s/\./\-/g" "local_ip.txt"
 [[ -z ${domain} ]] && domain="$(cat local_ip.txt).ip.c2ray.ml:${port}" && rm -rf local_ip.txt
 
 website="$4"
