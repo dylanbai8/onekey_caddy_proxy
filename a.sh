@@ -42,7 +42,7 @@ domain="$(cat local_ip.txt).ip.c2ray.ml" && rm -rf local_ip.txt
 fi
 
 #设置默认随机伪装网站
-sitenum="shuf -n 1 -e 1 2 3 4 5 6 7 8"
+sitenum=`shuf -n 1 -e 1 2 3 4 5 6 7 8`
 if [[ ! ${website} ]] && [[ ${sitenum} -eq 1 ]]; then
 website="www.ibm.com"
 elif [[ ! ${website} ]] && [[ ${sitenum} -eq 2 ]]; then
