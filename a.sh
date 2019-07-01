@@ -11,22 +11,29 @@ set_proxy_info(){
 
 user="$1"
 
-[[ -z ${user} ]] && user="admin"
+if [ ! $1 ]; then
+user="admin"
+fi
 
 pass="$2"
 
-[[ -z ${pass} ]] && pass=`cat /dev/urandom | head -n 10 | md5sum | head -c 8`
+if [ ! $2 ]; then
+pass=`cat /dev/urandom | head -n 10 | md5sum | head -c 8`
+fi
 
-domain="$3"
-port="443"
+domain="$3" && port="443"
 
+if [ ! $3 ]; then
 rm -rf local_ip.txt && touch local_ip.txt
 echo `curl -4 ip.sb` >> local_ip.txt && sed -i "s/\./\-/g" "local_ip.txt"
 [[ -z ${domain} ]] && domain="$(cat local_ip.txt).ip.c2ray.ml" && rm -rf local_ip.txt
+fi
 
 website="$4"
 
-[[ -z ${website} ]] && website="www.stenabulk.com"
+if [ ! $1 ]; then
+website="www.stenabulk.com"
+fi
 
 }
 
