@@ -15,12 +15,12 @@ user="$1"
 
 pass="$2"
 
-[[ -z ${pass} ]] && pass="password"
+[[ -z ${pass} ]] && pass=`cat /dev/urandom | head -n 10 | md5sum | head -c 8`
 
 domain="$3"
 port="443"
 
-touch local_ip.txt && echo `curl -4 ip.sb` >> local_ip.txt && sed "s/./-/" local_ip.txt
+touch local_ip.txt && echo `curl -4 ip.sb` >> local_ip.txt && sed "s/\./-/" local_ip.txt
 [[ -z ${domain} ]] && domain="$(cat local_ip.txt).ip.c2ray.ml:${port}" && rm -rf local_ip.txt
 
 website="$4"
