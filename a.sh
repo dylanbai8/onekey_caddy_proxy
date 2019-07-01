@@ -6,32 +6,43 @@
 
 
 
-#设置用户名
+#获取配置信息
+user="$1"
+pass="$2"
+domain="$3"
+website="$4"
+
+#配置端口
+port="443"
+
+
+
+#设置代理信息
 set_proxy_info(){
 
-user="$1"
+echo "----------------------------------------------------------"
+echo "正在生成代理信息"
+echo "----------------------------------------------------------"
 
-if [ ! $1 ]; then
+#设置默认账号
+if [ ! ${user} ]; then
 user="admin"
 fi
 
-pass="$2"
-
-if [ ! $2 ]; then
+#设置默认密码
+if [ ! ${pass} ]; then
 pass=`cat /dev/urandom | head -n 10 | md5sum | head -c 8`
 fi
 
-domain="$3" && port="443"
-
-if [ ! $3 ]; then
+#生成默认域名
+if [ ! ${domain} ]; then
 rm -rf local_ip.txt && touch local_ip.txt
 echo `curl -4 ip.sb` >> local_ip.txt && sed -i "s/\./\-/g" "local_ip.txt"
-[[ -z ${domain} ]] && domain="$(cat local_ip.txt).ip.c2ray.ml" && rm -rf local_ip.txt
+domain="$(cat local_ip.txt).ip.c2ray.ml" && rm -rf local_ip.txt
 fi
 
-website="$4"
-
-if [ ! $1 ]; then
+#设置默认伪装网站
+if [ ! ${website} ]; then
 website="www.stenabulk.com"
 fi
 
@@ -41,6 +52,10 @@ fi
 
 #清除可能残余的caddy
 clean_caddy(){
+
+echo "----------------------------------------------------------"
+echo "正在清除可能残余的caddy文件（如多次重装）"
+echo "----------------------------------------------------------"
 
 rm -rf /usr/local/bin/Caddyfile
 
@@ -53,6 +68,10 @@ rm -rf /usr/local/bin/caddy
 #安装caddy
 install_caddy(){
 
+echo "----------------------------------------------------------"
+echo "正在安装caddy主程序和代理相关插件"
+echo "----------------------------------------------------------"
+
 curl https://getcaddy.com | bash -s personal http.forwardproxy,http.proxyprotocol
 
 }
@@ -61,6 +80,10 @@ curl https://getcaddy.com | bash -s personal http.forwardproxy,http.proxyprotoco
 
 #配置caddy
 config_caddy(){
+
+echo "----------------------------------------------------------"
+echo "正在配置Caddyfile"
+echo "----------------------------------------------------------"
 
 touch /usr/local/bin/Caddyfile
 
@@ -82,6 +105,10 @@ EOF
 
 #开机自启动caddy
 auto_caddy(){
+
+echo "----------------------------------------------------------"
+echo "正在配置caddy开机自启动"
+echo "----------------------------------------------------------"
 
 touch /etc/systemd/system/caddy.service
 
@@ -109,6 +136,10 @@ systemctl enable caddy
 #安装伪装网站
 website_caddy(){
 
+echo "----------------------------------------------------------"
+echo "正在安装静态伪装网站"
+echo "----------------------------------------------------------"
+
 rm -rf /www
 mkdir /www
 
@@ -122,6 +153,10 @@ mv ./*${website}*/* /www
 
 #重启caddy
 restart_caddy(){
+
+echo "----------------------------------------------------------"
+echo "重启caddy载入配置文件"
+echo "----------------------------------------------------------"
 
 systemctl daemon-reload
 
