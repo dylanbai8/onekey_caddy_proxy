@@ -38,6 +38,12 @@ bash <(curl -L -s git.io/a.sh) uninstall
 可能用到的命令
 
 ```
+关于伪装网站：
+
+伪装网站安装原理为自动抓取下载对方网站
+被下载的网站必须是html静态站（最好是html单页面静态站点）
+例如：www.stenabulk.com
+
 Debian8 更新系统 安装必要软件：
 
 apt update -y
