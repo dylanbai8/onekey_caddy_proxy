@@ -58,7 +58,7 @@ config_caddy(){
 touch /usr/local/bin/Caddyfile
 
 cat <<EOF > /usr/local/bin/Caddyfile
-${domain}:${port}{
+${domain}:${port} {
 tls admin@${domain}
 root /www
 gzip
