@@ -245,6 +245,7 @@ systemctl disable caddy
 rm -rf /usr/local/bin/Caddyfile
 rm -rf /usr/local/bin/caddy
 rm -rf /etc/systemd/system/caddy.service
+rm -rf /www
 
 clear
 echo "----------------------------------------------------------"
