@@ -221,7 +221,7 @@ show_proxy_info
 
 
 
-if [ ${user} = uninstall ]; then
+if [ "${user}" == uninstall ]; then
 
 systemctl stop caddy
 systemctl disable caddy
