@@ -12,8 +12,15 @@ pass="$2"
 domain="$3"
 website="$4"
 
-#配置端口
+
+
+#配置端口和临时根域名
+#:::::::::::::::::::::::::::::::::::::
+
 port="443"
+domain_root="ip.c2ray.ml"
+
+#:::::::::::::::::::::::::::::::::::::
 
 
 
@@ -38,7 +45,7 @@ fi
 if [ ! ${domain} ]; then
 rm -rf local_ip.txt && touch local_ip.txt
 echo `curl -4 ip.sb` >> local_ip.txt && sed -i "s/\./\-/g" "local_ip.txt"
-domain="$(cat local_ip.txt).ip.c2ray.ml" && rm -rf local_ip.txt
+domain="$(cat local_ip.txt).${domain_root}" && rm -rf local_ip.txt
 fi
 
 #设置默认随机伪装网站
@@ -169,6 +176,8 @@ mkdir /www
 wget -c -r -np -k -L -p ${website}
 
 mv ./*${website}*/* /www
+
+rm -rf ./*${website}*/*
 
 }
 
