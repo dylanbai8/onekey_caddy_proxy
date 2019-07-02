@@ -1,4 +1,4 @@
-# 一键搭建基于 caddy 的 https(h2) 代理（自带website伪装网站）
+## 一键搭建基于 caddy 的 https(h2) 代理（自带website伪装网站）
 
 注意：安装过程中需要保证80端口443端口开放并未被占用（自动申请ssl证书）
 
@@ -11,9 +11,14 @@ bash <(curl -L -s git.io/a.sh)
 ## 方法2.自定义一键安装（自定义账号密码 自定义域名 自定义伪装站点）
 
 ```
-解析你的域名A记录到服务器IP 按照以下格式执行安装命令
+[仅自定义用户名密码]
 
-格式：
+bash <(curl -L -s git.io/a.sh) admin 888888
+
+
+[自定义域名]
+
+格式：（解析你的域名A记录到服务器IP 按照以下格式执行安装命令）
 
 bash <(curl -L -s git.io/a.sh) 用户名 密码 你的域名 要伪装的网站
 
@@ -24,10 +29,6 @@ bash <(curl -L -s git.io/a.sh) admin 888888 www.yourdomian.com www.apple.com
 或者：
 
 bash <(curl -L -s git.io/a.sh) admin 888888 www.yourdomian.com
-
-或者：
-
-bash <(curl -L -s git.io/a.sh) admin 888888
 
 ```
 

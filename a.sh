@@ -91,8 +91,10 @@ install_caddy(){
 if [[ -e /usr/local/bin/caddy ]]; then
 
 echo "----------------------------------------------------------"
-echo "检测到caddy已安装跳过安装程序"
+echo "检测到本机已安装 caddy 跳过执行安装程序"
 echo "----------------------------------------------------------"
+
+caddy_tips="使用本机原有的 caddy 程序，如果代理不可用请先执行卸载后重装"
 
 else
 
@@ -101,6 +103,8 @@ echo "正在安装caddy主程序和代理相关插件"
 echo "----------------------------------------------------------"
 
 curl https://getcaddy.com | bash -s personal http.forwardproxy,http.proxyprotocol
+
+caddy_tips="安装已完成，基于 caddy 的 https(h2) 代理（自带website伪装网站）"
 
 fi
 
@@ -212,6 +216,9 @@ echo "用户名：${user}"
 echo "密码：${pass}"
 echo ""
 echo "----------------------------------------------------------"
+echo "${caddy_tips}"
+echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
+echo "关联项目：https://c2ray.ml"
 }
 
 
