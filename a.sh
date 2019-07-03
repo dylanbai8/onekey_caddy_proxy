@@ -325,7 +325,8 @@ check_domain(){
 local_ip=`curl -4 ip.sb`
 domain_ip=`ping ${domain} -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`
 
-if [[ $(echo ${local_ip}|tr '.' '+'|bc) -eq $(echo ${domain_ip}|tr '.' '+'|bc) ]];then
+if [ "${local_ip}" == "${domain_ip}" ]; then
+#if [[ $(echo ${local_ip}|tr '.' '+'|bc) -eq $(echo ${domain_ip}|tr '.' '+'|bc) ]];then
 
 status_domain="解析已生效"
 
@@ -390,6 +391,8 @@ chack_ssl
 
 clear
 echo "----------------------------------------------------------"
+echo ":: 基于 caddy 的 https(h2) 代理（自带website伪装网站）::"
+echo "----------------------------------------------------------"
 echo ""
 echo "代理协议：https"
 echo ""
@@ -409,6 +412,7 @@ echo ""
 echo "${caddy_tips}"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
 echo "关联项目：https://c2ray.ml"
+echo ""
 }
 
 
@@ -443,6 +447,8 @@ rm -rf /usr/local/bin/proxy_info
 chack_caddy
 
 clear
+echo "----------------------------------------------------------"
+echo ":: 基于 caddy 的 https(h2) 代理（自带website伪装网站）::"
 echo "----------------------------------------------------------"
 echo ""
 echo "caddy已卸载"
@@ -489,6 +495,7 @@ echo ""
 echo "如需要修改用户名密码 重复执行安装时相同的代码即可"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
 echo "关联项目：https://c2ray.ml"
+echo ""
 exit
 
 fi
@@ -498,8 +505,10 @@ fi
 #修改用户名密码
 reset_password(){
 
+echo ""
 echo "按照提示依次重设代理的用户名密码"
 echo "如使用默认值（或随机值） 请留空 直接按回车"
+echo ""
 
 stty erase '^H' && read -e -p "设置代理用户名：" user
 if [ ! ${user} ]; then
@@ -551,6 +560,7 @@ echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
 echo ""
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
 echo "关联项目：https://c2ray.ml"
+echo ""
 
 }
 
@@ -659,6 +669,8 @@ rm -rf ./chvin.github.io
 
 clear
 echo "----------------------------------------------------------"
+echo ":: 基于 caddy 的 https(h2) 代理（自带website伪装网站）::"
+echo "----------------------------------------------------------"
 echo ""
 echo "彩蛋安装完成 打开伪装网站查看"
 echo "网站地址：${get_domain}"
@@ -674,12 +686,10 @@ exit
 elif [[ "${user}" == egg ]]; then
 
 bash <(curl -L -s git.io/a.sh)
-
 bash <(curl -L -s git.io/a.sh) egg
+exit
 
 fi
-
-
 
 
 
