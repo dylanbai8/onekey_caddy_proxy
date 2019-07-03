@@ -610,9 +610,9 @@ bash <(curl -L -s git.io/a.sh) ${user} ${pass} ${domain} ${website}
 systemctl restart caddy
 clear
 echo "----------------------------------------------------------"
-echo "已重启caddy进程 5秒钟后返回开始菜单"
+echo "已重启caddy进程 [5]秒钟后返回开始菜单"
 echo "----------------------------------------------------------"
-sleep 6
+sleep 5
 bash <(curl -L -s git.io/a.sh) menu
 ;;
 
@@ -673,7 +673,15 @@ echo ":: 基于 caddy 的 https(h2) 代理（自带website伪装网站）::"
 echo "----------------------------------------------------------"
 echo ""
 echo "彩蛋安装完成 打开伪装网站查看"
-echo "网站地址：${get_domain}"
+echo "彩蛋地址：${get_domain}"
+echo ""
+echo "代理协议：https"
+echo ""
+echo "代理服务器：${get_domain}"
+echo "代理端口：${get_port}"
+echo ""
+echo "用户名：${get_user}"
+echo "密码：${get_pass}"
 echo ""
 echo "关联项目：https://c2ray.ml"
 echo ""
