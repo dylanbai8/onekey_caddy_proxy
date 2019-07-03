@@ -464,6 +464,8 @@ if [ "${user}" == showinfo ]; then
 
 read_proxy_info
 chack_caddy
+
+${domain}="${get_domain}"
 chack_ssl
 
 clear
