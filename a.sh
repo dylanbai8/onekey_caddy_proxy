@@ -113,11 +113,11 @@ fi
 #储存配置信息
 storage_proxy_info(){
 
-rm -rf ./.proxy_info
-mkdir ./.proxy_info
+rm -rf ./proxy_info
+mkdir ./proxy_info
 
-touch ./.proxy_info/username
-cat <<EOF > ./.proxy_info/username
+touch ./proxy_info/username
+cat <<EOF > ./proxy_info/username
 ${user}
 EOF
 
@@ -653,7 +653,7 @@ wget -r -p -np -k https://chvin.github.io/react-tetris/music.mp3
 
 mv ./chvin.github.io/react-tetris/* /www
 
-rm -rf ./chvin.github.io/react-tetris
+rm -rf ./chvin.github.io
 
 clear
 echo "----------------------------------------------------------"
