@@ -46,6 +46,10 @@ bash <(curl -L -s git.io/a.sh) showinfo
 
 ## 菜单模式
 
+```
+bash <(curl -L -s git.io/a.sh) menu
+```
+
 ## 彩蛋
 
 ```
