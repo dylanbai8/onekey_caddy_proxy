@@ -87,6 +87,7 @@ AutoProxy规则列表网址 https://raw.githubusercontent.com/gfwlist/gfwlist/ma
 如需要修改用户名密码 重复执行安装时相同的代码即可
 
 Debian8 更新系统 安装必要软件：
+（Linux 新手推荐使用 Debian8 系统）
 
 apt update -y
 apt install curl -y
