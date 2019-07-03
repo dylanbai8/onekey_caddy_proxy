@@ -70,6 +70,9 @@ bash <(curl -L -s git.io/a.sh) egg
 ## 可能用到的命令
 
 ```
+所有指令假设已在 su 环境下，如果不是，请先运行 sudo su
+（Linux 新手推荐使用 Debian8 系统 root 下执行安装）
+
 ProxySwitchyOmega 插件下载地址：
 
 https://github.com/FelisCatus/SwitchyOmega/releases
@@ -87,7 +90,6 @@ AutoProxy规则列表网址 https://raw.githubusercontent.com/gfwlist/gfwlist/ma
 如需要修改用户名密码 重复执行安装时相同的代码即可
 
 Debian8 更新系统 安装必要软件：
-（Linux 新手推荐使用 Debian8 系统）
 
 apt update -y
 apt install curl -y
@@ -101,6 +103,11 @@ Debian8 关闭 apache2 ：
 systemctl stop apache2
 systemctl disable apache2
 
+其它：
+
+为节省Let’s Encrypt公共资源，减少没必要的重复证书申请，
+脚本在执行卸载时并未删除已申请储存的域名证书（储存位置 /root/.caddy）。
+强制清除命令：rm -rf /root/.caddy
 ```
 
 ## 关联项目：

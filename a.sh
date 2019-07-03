@@ -361,11 +361,28 @@ fi
 
 
 
+#检测域名ssl证书
+chack_ssl(){
+
+if [[ -e ./.caddy/acme/acme-v02.api.letsencrypt.org/sites/${domain}/${domain}.key ]]; then
+
+status_ssl="已安装"
+
+else
+
+status_ssl="未安装（新增域名可能需要等待数分钟）"
+
+fi
+}
+
+
+
 #展示配置信息
 show_proxy_info(){
 
 chack_caddy
 check_domain
+chack_ssl
 
 clear
 echo "----------------------------------------------------------"
@@ -383,6 +400,7 @@ echo ""
 echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
 echo "当前域名状态：${status_domain}"
 echo "当前端口状态：[${status_port80}]-[${status_portssl}]"
+echo "当前ssl证书状态：${status_ssl}"
 echo ""
 echo "${caddy_tips}"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
@@ -442,6 +460,7 @@ if [ "${user}" == showinfo ]; then
 
 read_proxy_info
 chack_caddy
+chack_ssl
 
 clear
 echo "----------------------------------------------------------"
@@ -457,6 +476,7 @@ echo ""
 echo "----------------------------------------------------------"
 echo ""
 echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
+echo "当前ssl证书状态：${status_ssl}"
 echo ""
 echo "如需要修改用户名密码 重复执行安装时相同的代码即可"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
