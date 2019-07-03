@@ -38,6 +38,22 @@ bash <(curl -L -s git.io/a.sh) admin 888888 www.yourdomian.com
 bash <(curl -L -s git.io/a.sh) uninstall
 ```
 
+## 查看当前代理账号信息
+
+```
+bash <(curl -L -s git.io/a.sh) showinfo
+```
+
+## 菜单模式
+
+## 彩蛋
+
+```
+bash <(curl -L -s git.io/a.sh) egg
+```
+
+
+
 客户端配置
 
 ```
@@ -50,6 +66,11 @@ bash <(curl -L -s git.io/a.sh) uninstall
 ## 可能用到的命令
 
 ```
+ProxySwitchyOmega 插件下载地址：
+
+https://github.com/FelisCatus/SwitchyOmega/releases
+AutoProxy规则列表网址 https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
+
 关于伪装网站：
 
 伪装网站安装原理为自动抓取下载对方网站首页到自己的服务器
