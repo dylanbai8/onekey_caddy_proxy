@@ -113,8 +113,8 @@ fi
 #储存配置信息
 storage_proxy_info(){
 
-rm -rf /usr/local/bin/proxy_info
-sudo mkdir -p /usr/local/bin/proxy_info
+rm -rf ./.proxy_info
+mkdir ./.proxy_info
 
 touch /usr/local/bin/proxy_info/username
 cat <<EOF > /usr/local/bin/proxy_info/username
