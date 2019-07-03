@@ -121,18 +121,18 @@ cat <<EOF > ./proxy_info/username
 ${user}
 EOF
 
-touch ./.proxy_info/password
-cat <<EOF > ./.proxy_info/password
+touch ./proxy_info/password
+cat <<EOF > ./proxy_info/password
 ${pass}
 EOF
 
-touch ./.proxy_info/domain
-cat <<EOF > ./.proxy_info/domain
+touch ./proxy_info/domain
+cat <<EOF > ./proxy_info/domain
 ${domain}
 EOF
 
-touch ./.proxy_info/port
-cat <<EOF > ./.proxy_info/port
+touch ./proxy_info/port
+cat <<EOF > ./proxy_info/port
 ${port}
 EOF
 
@@ -143,13 +143,13 @@ EOF
 #读取配置信息
 read_proxy_info(){
 
-get_user="$(cat ./.proxy_info/username)"
+get_user="$(cat ./proxy_info/username)"
 
-get_pass="$(cat ./.proxy_info/password)"
+get_pass="$(cat ./proxy_info/password)"
 
-get_domain="$(cat ./.proxy_info/domain)"
+get_domain="$(cat ./proxy_info/domain)"
 
-get_port="$(cat ./.proxy_info/port)"
+get_port="$(cat ./proxy_info/port)"
 
 }
 
@@ -163,7 +163,7 @@ echo "正在清除可能残余的caddy文件（如多次重装）"
 echo "----------------------------------------------------------"
 
 rm -rf /usr/local/bin/Caddyfile
-rm -rf ./.proxy_info
+rm -rf ./proxy_info
 
 }
 
@@ -438,7 +438,7 @@ rm -rf /usr/local/bin/Caddyfile
 rm -rf /usr/local/bin/caddy
 rm -rf /etc/systemd/system/caddy.service
 rm -rf /www
-rm -rf ./.proxy_info
+rm -rf ./proxy_info
 
 chack_caddy
 
@@ -509,13 +509,13 @@ if [ ! ${pass} ]; then
 pass=`cat /dev/urandom | head -n 10 | md5sum | head -c 8`
 fi
 
-touch ./.proxy_info/username
-cat <<EOF > ./.proxy_info/username
+touch ./proxy_info/username
+cat <<EOF > ./proxy_info/username
 ${user}
 EOF
 
-touch ./.proxy_info/password
-cat <<EOF > ./.proxy_info/password
+touch ./proxy_info/password
+cat <<EOF > ./proxy_info/password
 ${pass}
 EOF
 
