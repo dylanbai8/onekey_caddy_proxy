@@ -56,9 +56,9 @@ bash <(curl -L -s git.io/a.sh) menu
 bash <(curl -L -s git.io/a.sh) egg
 ```
 
-## [ Nat VPS ] 一键搭建基于 caddy 的 https(h2) 代理（SSL自动续期 自带website伪装网站）
+## For[ Nat VPS ] 基于 caddy 的 https(h2) 代理（SSL自动续期 自带website伪装网站）
 
-注意：无需 80 端口 适用于 Nat VPS 通过 DNS API 模式申请 Let’s Encrypt 证书
+注意：通过 DNS API 模式申请 Let’s Encrypt 证书 无需 80 端口 适用于 Nat VPS
 
 ```
 bash <(curl -L -s git.io/a.sh) dns
