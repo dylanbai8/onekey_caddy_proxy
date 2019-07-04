@@ -714,12 +714,12 @@ echo "按照提示依次设置 CloudFlare的 DNS API 接口"
 echo "接口申请地址：https://www.cloudflare.com/a/profile"
 echo ""
 
-stty erase '^H' && read -e -p "设置代理用户名：" CF_Key
+stty erase '^H' && read -e -p "设置 CF_Key 请输入：" CF_Key
 if [ ! ${CF_Key} ]; then
 set_cloudflare_dnsapi
 fi
 
-stty erase '^H' && read -e -p "设置代理用户名：" CF_Email
+stty erase '^H' && read -e -p "设置 CF_Email 请输入：" CF_Email
 if [ ! ${CF_Email} ]; then
 set_cloudflare_dnsapi
 fi
@@ -741,12 +741,12 @@ echo "按照提示依次设置 腾讯/DNSPod（国内版）DNS API 接口"
 echo "接口申请地址：https://console.cloud.tencent.com/cam/capi"
 echo ""
 
-stty erase '^H' && read -e -p "设置代理用户名：" DP_Id
+stty erase '^H' && read -e -p "设置 DP_Id 请输入：" DP_Id
 if [ ! ${DP_Id} ]; then
 set_dnspod_dnsapi
 fi
 
-stty erase '^H' && read -e -p "设置代理用户名：" DP_Key
+stty erase '^H' && read -e -p "设置 DP_Key 请输入：" DP_Key
 if [ ! ${DP_Key} ]; then
 set_dnspod_dnsapi
 fi
@@ -768,12 +768,12 @@ echo "按照提示依次设置 阿里云解析 DNS API 接口"
 echo "接口申请地址：https://usercenter.console.aliyun.com/#/manage/ak"
 echo ""
 
-stty erase '^H' && read -e -p "设置代理用户名：" Ali_Key
+stty erase '^H' && read -e -p "设置 Ali_Key 请输入：" Ali_Key
 if [ ! ${Ali_Key} ]; then
 set_aliyun_dnsapi
 fi
 
-stty erase '^H' && read -e -p "设置代理用户名：" Ali_Secret
+stty erase '^H' && read -e -p "设置 Ali_Secret 请输入：" Ali_Secret
 if [ ! ${Ali_Secret} ]; then
 set_aliyun_dnsapi
 fi
@@ -800,6 +800,7 @@ if [ ! ${port} ]; then
 port="443"
 fi
 
+echo ""
 menu_proxy_info
 
 curl https://get.acme.sh | sh
@@ -848,6 +849,8 @@ echo "1.CloudFlare 域名解析"
 echo "2.腾讯/DNSPod（国内版）"
 echo "3.阿里云 域名云解析"
 echo ""
+echo "注意：API参数将设置储存在本机acme环境变量中 勿在不安全的环境中使用"
+echo ""
 
 stty erase '^H' && read -e -p "设置代理用户名：" api_num
 
@@ -879,9 +882,9 @@ esac
 if [ "${user}" == dns ]; then
 
 caddy_proxy_for_natvps
+clean_caddy
 getssl_with_dnsapi
 
-clean_caddy
 storage_proxy_info
 install_caddy
 config_caddy
