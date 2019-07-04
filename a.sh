@@ -382,7 +382,11 @@ fi
 #检测域名ssl证书
 chack_ssl(){
 
-procing
+echo ""
+echo "正在等待签发域名 SSL 证书"
+echo "----------------------------------------------------------"
+wait_ssl_procing
+echo "----------------------------------------------------------"
 
 echo "----------------------------------------------------------"
 echo "正在检测ssl证书情况"
@@ -401,18 +405,28 @@ fi
 
 
 
-#输出进度条, 小棍型
-procing() {
-b=''
-i=0
-while [ $i -le 100 ]
-do
- printf "[%-50s] %d%% \r" "$b" "$i";
- sleep 0.2
- ((i=i+2))
- b+='#'
-done
-echo
+#输出进度条
+wait_ssl_procing(){
+
+COUNTER=0 
+_R=0 
+_C=`tput cols`  
+_PROCEC=`tput cols`  
+tput cup $_C $_R  
+printf "["  
+while [ $COUNTER -lt 100 ]  
+do  
+    COUNTER=`expr $COUNTER + 1`  
+    sleep 0.1  
+    printf "=>"  
+    _R=`expr $_R + 1`  
+    _C=`expr $_C + 1`  
+    tput cup $_PROCEC 101  
+    printf "]%d%%" $COUNTER  
+    tput cup $_C $_R  
+done  
+printf "\n"
+
 }
 
 
