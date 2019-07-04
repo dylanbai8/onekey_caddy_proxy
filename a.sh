@@ -51,6 +51,9 @@ fi
 #设置默认随机伪装网站
 set_website_num
 
+#清除可能残余的caddy
+clean_caddy
+
 #检测端口
 check_port
 
@@ -379,6 +382,8 @@ fi
 #检测域名ssl证书
 chack_ssl(){
 
+procing
+
 echo "----------------------------------------------------------"
 echo "正在检测ssl证书情况"
 echo "----------------------------------------------------------"
@@ -392,6 +397,24 @@ else
 status_ssl="未安装（新增域名可能需要等待数分钟）"
 
 fi
+}
+
+
+
+#输出进度条, 小棍型
+procing() {
+        while [ 1 ]
+        do
+            for j in '-' '\\' '|' '/'
+            do
+                #保存当前光标所在位置
+                tput sc                         
+                echo -ne  "$j"
+                sleep 1
+                #恢复光标到最后保存的位置
+                tput rc                         
+          done
+        done 
 }
 
 
@@ -434,7 +457,6 @@ echo ""
 #命令执行列表
 main(){
 set_proxy_info
-clean_caddy
 storage_proxy_info
 install_caddy
 config_caddy
