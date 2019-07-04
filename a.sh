@@ -852,7 +852,7 @@ echo ""
 echo "注意：API参数将设置储存在本机acme环境变量中 勿在不安全的环境中使用"
 echo ""
 
-stty erase '^H' && read -e -p "设置代理用户名：" api_num
+stty erase '^H' && read -e -p "请选择：" api_num
 
 case ${api_num} in
 
