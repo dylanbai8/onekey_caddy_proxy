@@ -881,7 +881,7 @@ esac
 
 
 #通过 DNS API 模式申请 Let’s Encrypt 证书 安装https(h2)代理
-if [ "${user}" == dns ]; then
+if [ "${user}" == natvps ]; then
 
 caddy_proxy_for_natvps
 clean_caddy
