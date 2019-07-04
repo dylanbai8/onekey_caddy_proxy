@@ -63,6 +63,9 @@ bash <(curl -L -s git.io/a.sh) egg
 SSL自动续期 自带website伪装网站
 
 ```
+需要使用到 DNS API（支持 CloudFlare 腾讯DNSPod 阿里云解析）
+解析你的域名A记录到服务器IP 执行以下安装命令依照提示操作
+
 bash <(curl -L -s git.io/a.sh) natvps
 ```
 

@@ -51,6 +51,9 @@ fi
 #设置默认随机伪装网站
 set_website_num
 
+#检测端口
+check_port
+
 }
 set_website_num(){
 
@@ -105,6 +108,10 @@ stty erase '^H' && read -e -p "要伪装成的网站：" website
 if [ ! ${website} ]; then
 set_website_num
 fi
+
+#检测端口
+check_port
+
 }
 
 
@@ -167,8 +174,6 @@ systemctl stop caddy
 rm -rf /usr/local/bin/Caddyfile
 rm -rf /usr/local/bin/proxy_info
 rm -rf /usr/local/bin/ssl_for_caddy
-
-check_port
 
 }
 
@@ -343,6 +348,10 @@ fi
 #检测端口是否被占用
 check_port(){
 
+echo "----------------------------------------------------------"
+echo "正在检测端口占用情况"
+echo "----------------------------------------------------------"
+
 if [[ 0 -eq `lsof -i:"80" | wc -l` ]];then
 
 status_port80="80端口正常"
@@ -369,6 +378,10 @@ fi
 
 #检测域名ssl证书
 chack_ssl(){
+
+echo "----------------------------------------------------------"
+echo "正在检测ssl证书情况"
+echo "----------------------------------------------------------"
 
 if [[ -e ./.caddy/acme/acme-v02.api.letsencrypt.org/sites/${domain}/${domain}.key ]]; then
 
@@ -436,6 +449,10 @@ show_proxy_info
 #卸载caddy
 if [ "${user}" == uninstall ]; then
 
+echo "----------------------------------------------------------"
+echo "正在执行卸载"
+echo "----------------------------------------------------------"
+
 systemctl stop caddy
 systemctl disable caddy
 
@@ -469,6 +486,10 @@ fi
 
 #查看当前代理账号信息
 if [ "${user}" == showinfo ]; then
+
+echo "----------------------------------------------------------"
+echo "正在读取账号信息"
+echo "----------------------------------------------------------"
 
 read_proxy_info
 chack_caddy
@@ -805,6 +826,10 @@ fi
 echo ""
 menu_proxy_info
 
+echo "----------------------------------------------------------"
+echo "正在安装acme.sh 开始申请ssl证书"
+echo "----------------------------------------------------------"
+
 curl https://get.acme.sh | sh
 
 ./.acme.sh/acme.sh --issue --dns ${dns_cmd} -d ${domain}
@@ -820,6 +845,10 @@ mkdir /usr/local/bin/ssl_for_caddy
 
 #检测域名dns ssl证书
 chack_dns_ssl(){
+
+echo "----------------------------------------------------------"
+echo "正在检测ssl证书情况"
+echo "----------------------------------------------------------"
 
 if [[ -e /usr/local/bin/ssl_for_caddy/${domain}.key ]]; then
 
