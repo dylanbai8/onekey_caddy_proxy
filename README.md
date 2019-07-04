@@ -106,8 +106,8 @@ systemctl disable apache2
 其它：
 
 为节省Let’s Encrypt公共资源，减少没必要的重复证书申请，
-脚本在执行卸载时并未删除已申请储存的域名证书（储存位置 /root/.caddy）。
-强制清除命令：rm -rf /root/.caddy
+脚本在执行卸载时并未删除已申请储存的域名证书（储存位置 /root/.caddy 或 /root/.acme.sh）。
+强制清除命令：rm -rf /root/.caddy 或 rm -rf /root/.acme.sh
 ```
 
 ## 关联项目：

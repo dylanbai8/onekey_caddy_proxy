@@ -162,11 +162,8 @@ echo "----------------------------------------------------------"
 echo "正在清除可能残余的caddy文件（如多次重装）"
 echo "----------------------------------------------------------"
 
-systemctl stop caddy
-
 rm -rf /usr/local/bin/Caddyfile
 rm -rf /usr/local/bin/proxy_info
-rm -rf /usr/local/bin/ssl_for_caddy
 
 }
 
@@ -180,6 +177,8 @@ if [[ -e /usr/local/bin/caddy ]]; then
 echo "----------------------------------------------------------"
 echo "检测到本机已安装 caddy 跳过执行安装程序"
 echo "----------------------------------------------------------"
+
+systemctl stop caddy
 
 caddy_tips="使用本机原有的 caddy 程序，如果代理不可用请先执行卸载后重装"
 
@@ -444,7 +443,6 @@ rm -rf /usr/local/bin/caddy
 rm -rf /etc/systemd/system/caddy.service
 rm -rf /www
 rm -rf /usr/local/bin/proxy_info
-rm -rf /usr/local/bin/ssl_for_caddy
 
 chack_caddy
 
@@ -699,230 +697,6 @@ bash <(curl -L -s git.io/a.sh)
 bash <(curl -L -s git.io/a.sh) egg
 exit
 
-fi
-
-
-
-#:::::::::::以下所有代码为 通过 DNS API 模式申请 Let’s Encrypt 证书 安装https(h2)代理::::::::::::
-
-
-#设置cloudflare域名解析api
-set_cloudflare_dnsapi(){
-
-echo ""
-echo "按照提示依次设置 CloudFlare的 DNS API 接口"
-echo "接口申请地址：https://www.cloudflare.com/a/profile"
-echo ""
-
-stty erase '^H' && read -e -p "设置代理用户名：" CF_Key
-if [ ! ${CF_Key} ]; then
-set_cloudflare_dnsapi
-fi
-
-stty erase '^H' && read -e -p "设置代理用户名：" CF_Email
-if [ ! ${CF_Email} ]; then
-set_cloudflare_dnsapi
-fi
-
-export CF_Key="${CF_Key}"
-export CF_Email="${CF_Email}"
-
-dns_cmd="dns_cf"
-
-}
-
-
-
-#设置dnspod域名解析api
-set_dnspod_dnsapi(){
-
-echo ""
-echo "按照提示依次设置 腾讯/DNSPod（国内版）DNS API 接口"
-echo "接口申请地址：https://console.cloud.tencent.com/cam/capi"
-echo ""
-
-stty erase '^H' && read -e -p "设置代理用户名：" DP_Id
-if [ ! ${DP_Id} ]; then
-set_dnspod_dnsapi
-fi
-
-stty erase '^H' && read -e -p "设置代理用户名：" DP_Key
-if [ ! ${DP_Key} ]; then
-set_dnspod_dnsapi
-fi
-
-export DP_Id="${DP_Id}"
-export DP_Key="${DP_Key}"
-
-dns_cmd="dns_dp"
-
-}
-
-
-
-#设置aliyun域名解析api
-set_aliyun_dnsapi(){
-
-echo ""
-echo "按照提示依次设置 阿里云解析 DNS API 接口"
-echo "接口申请地址：https://usercenter.console.aliyun.com/#/manage/ak"
-echo ""
-
-stty erase '^H' && read -e -p "设置代理用户名：" Ali_Key
-if [ ! ${Ali_Key} ]; then
-set_aliyun_dnsapi
-fi
-
-stty erase '^H' && read -e -p "设置代理用户名：" Ali_Secret
-if [ ! ${Ali_Secret} ]; then
-set_aliyun_dnsapi
-fi
-
-export Ali_Key="${Ali_Key}"
-export Ali_Secret="${Ali_Secret}"
-
-dns_cmd="dns_ali"
-
-}
-
-
-
-#安装acme 使用dns模式申请证书
-getssl_with_dnsapi(){
-
-${set_dnsapi}
-
-echo ""
-echo "按照提示设置代理（SSL）端口 支持非443端口"
-echo ""
-stty erase '^H' && read -e -p "设置代理端口：" port
-if [ ! ${port} ]; then
-port="443"
-fi
-
-menu_proxy_info
-
-curl https://get.acme.sh | sh
-
-./.acme.sh/acme.sh --issue --dns ${dns_cmd} -d ${domain}
-
-rm -rf /usr/local/bin/ssl_for_caddy
-mkdir /usr/local/bin/ssl_for_caddy
-
-./.acme.sh/acme.sh --install-cert -d ${domain} --cert-file /usr/local/bin/ssl_for_caddy/${domain}.crt --key-file /usr/local/bin/ssl_for_caddy/${domain}.key --reloadcmd "systemctl restart caddy"
-
-}
-
-
-
-#检测域名dns ssl证书
-chack_dns_ssl(){
-
-if [[ -e /usr/local/bin/ssl_for_caddy/${domain}.key ]]; then
-
-status_ssl="已安装"
-
-else
-
-status_ssl="未安装（新增域名可能需要等待数分钟）"
-
-fi
-}
-
-
-
-#选取dns域名服务商
-caddy_proxy_for_natvps(){
-
-clear
-echo "----------------------------------------------------------"
-echo ":: 基于 caddy 的 https(h2) 代理（自带website伪装网站）::"
-echo "----------------------------------------------------------"
-echo ""
-echo "即将通过 DNS API 模式申请 Let’s Encrypt 证书 安装https(h2)代理"
-echo "适用于 nat vps 或者其它无法通过80端口验证域名的情况"
-echo ""
-echo "请选择你的域名解析 DNS 服务商："
-echo ""
-echo "1.CloudFlare 域名解析"
-echo "2.腾讯/DNSPod（国内版）"
-echo "3.阿里云 域名云解析"
-echo ""
-
-stty erase '^H' && read -e -p "设置代理用户名：" api_num
-
-case ${api_num} in
-
-1)
-set_dnsapi="set_cloudflare_dnsapi"
-;;
-
-2)
-set_dnsapi="set_dnspod_dnsapi"
-;;
-
-3)
-set_dnsapi="set_aliyun_dnsapi"
-;;
-
-*)
-caddy_proxy_for_natvps
-;;
-
-esac
-
-}
-
-
-
-#通过 DNS API 模式申请 Let’s Encrypt 证书 安装https(h2)代理
-if [ "${user}" == dns ]; then
-
-caddy_proxy_for_natvps
-getssl_with_dnsapi
-
-clean_caddy
-storage_proxy_info
-install_caddy
-config_caddy
-
-sed -i '/^tls/c\tls /usr/local/bin/ssl_for_caddy/'"${domain}"'.crt /usr/local/bin/ssl_for_caddy/'"${domain}"'.key' /usr/local/bin/Caddyfile
-
-auto_caddy
-website_caddy
-restart_caddy
-
-
-chack_caddy
-check_domain
-chack_dns_ssl
-
-clear
-echo "----------------------------------------------------------"
-echo ":: 基于 caddy 的 https(h2) 代理（自带website伪装网站）::"
-echo "----------------------------------------------------------"
-echo ""
-echo "代理协议：https"
-echo ""
-echo "代理服务器：${domain}"
-echo "代理端口：${port}"
-echo ""
-echo "用户名：${user}"
-echo "密码：${pass}"
-echo ""
-echo "----------------------------------------------------------"
-echo ""
-echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
-echo "当前域名状态：${status_domain}"
-echo "当前端口状态：[${status_portssl}]"
-echo "当前ssl证书状态：${status_ssl}"
-echo ""
-echo "${caddy_tips}"
-echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
-echo "关联项目：https://c2ray.ml"
-echo ""
-
-exit
 fi
 
 
