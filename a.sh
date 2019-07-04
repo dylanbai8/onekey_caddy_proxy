@@ -403,18 +403,16 @@ fi
 
 #输出进度条, 小棍型
 procing() {
-        while [ 1 ]
-        do
-            for j in '-' '\\' '|' '/'
-            do
-                #保存当前光标所在位置
-                tput sc                         
-                echo -ne  "$j"
-                sleep 1
-                #恢复光标到最后保存的位置
-                tput rc                         
-          done
-        done 
+b=''
+i=0
+while [ $i -le 100 ]
+do
+ printf "[%-50s] %d%% \r" "$b" "$i";
+ sleep 0.2
+ ((i=i+2))
+ b+='#'
+done
+echo
 }
 
 
