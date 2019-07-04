@@ -709,6 +709,7 @@ fi
 #设置cloudflare域名解析api
 set_cloudflare_dnsapi(){
 
+clear
 echo ""
 echo "按照提示依次设置 CloudFlare的 DNS API 接口"
 echo "接口申请地址：https://www.cloudflare.com/a/profile"
@@ -736,6 +737,7 @@ dns_cmd="dns_cf"
 #设置dnspod域名解析api
 set_dnspod_dnsapi(){
 
+clear
 echo ""
 echo "按照提示依次设置 腾讯/DNSPod（国内版）DNS API 接口"
 echo "接口申请地址：https://console.cloud.tencent.com/cam/capi"
@@ -763,6 +765,7 @@ dns_cmd="dns_dp"
 #设置aliyun域名解析api
 set_aliyun_dnsapi(){
 
+clear
 echo ""
 echo "按照提示依次设置 阿里云解析 DNS API 接口"
 echo "接口申请地址：https://usercenter.console.aliyun.com/#/manage/ak"
@@ -849,7 +852,7 @@ echo "1.CloudFlare 域名解析"
 echo "2.腾讯/DNSPod（国内版）"
 echo "3.阿里云 域名云解析"
 echo ""
-echo "注意：API参数将设置储存在本机acme环境变量中 勿在不安全的环境中使用"
+echo "注意：API参数将设置储存在本机 acme.sh 环境变量中 勿在不安全的环境中使用"
 echo ""
 
 stty erase '^H' && read -e -p "请选择：" api_num
