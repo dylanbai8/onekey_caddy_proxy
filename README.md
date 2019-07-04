@@ -1,4 +1,4 @@
-## 一键搭建基于 caddy 的 https(h2) 代理（自带website伪装网站）
+## 一键搭建基于 caddy 的 https(h2) 代理（SSL自动续期 自带website伪装网站）
 
 注意：安装过程中需要保证80端口443端口开放并未被占用（自动申请ssl证书）
 
@@ -56,7 +56,13 @@ bash <(curl -L -s git.io/a.sh) menu
 bash <(curl -L -s git.io/a.sh) egg
 ```
 
+## [ Nat VPS ] 一键搭建基于 caddy 的 https(h2) 代理（SSL自动续期 自带website伪装网站）
 
+注意：无需 80 端口 适用于 Nat VPS 通过 DNS API 模式申请 Let’s Encrypt 证书
+
+```
+bash <(curl -L -s git.io/a.sh) dns
+```
 
 客户端配置
 

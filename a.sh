@@ -168,6 +168,8 @@ rm -rf /usr/local/bin/Caddyfile
 rm -rf /usr/local/bin/proxy_info
 rm -rf /usr/local/bin/ssl_for_caddy
 
+check_port
+
 }
 
 
@@ -276,8 +278,6 @@ rm -rf ./*${website}*
 
 #重启caddy
 restart_caddy(){
-
-check_port
 
 echo "----------------------------------------------------------"
 echo "正在重启caddy载入配置文件"
@@ -492,7 +492,6 @@ echo ""
 echo "----------------------------------------------------------"
 echo ""
 echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
-echo "当前ssl证书状态：${status_ssl}"
 echo ""
 echo "如需要修改用户名密码 重复执行安装时相同的代码即可"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
