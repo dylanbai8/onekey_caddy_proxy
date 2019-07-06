@@ -393,6 +393,7 @@ status_ssl="已安装"
 else
 
     ssl_get_status
+	echo "正在等待签发证书（约1分钟）"
     if [[ -e ./.caddy/acme/acme-v02.api.letsencrypt.org/sites/${domain}/${domain}.key ]]; then
     status_ssl="已安装"
 	fi
@@ -415,7 +416,7 @@ do
   let indexcolor=i%8
   let color=30+indexcolor
   printf "\e[0;$color;1m[%-100s][%d%%]%c\r" "$str" "$i" "${arr[$index]}"
-  sleep 0.8
+  sleep 1.5
   let i++
   str+='='
 done
