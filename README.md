@@ -84,6 +84,9 @@ bash <(curl -L -s git.io/a.sh) natvps
 所有指令假设已在 su 环境下，如果不是，请先运行 sudo su
 （Linux 新手推荐使用 Debian8 系统 root 下执行安装）
 
+手动重启caddy进程
+systemctl restart caddy
+
 ProxySwitchyOmega 插件下载地址：
 
 https://github.com/FelisCatus/SwitchyOmega/releases
