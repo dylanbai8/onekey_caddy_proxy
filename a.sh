@@ -2,6 +2,7 @@
 
 #====================================================
 # 一键搭建基于 caddy 的 https(h2) 代理 [ debian 8 ]
+# 项目地址：https://github.com/dylanbai8/onekey_caddy_proxy
 #====================================================
 
 
@@ -123,6 +124,10 @@ check_port
 #储存配置信息
 storage_proxy_info(){
 
+echo "----------------------------------------------------------"
+echo "正在写入配置信息"
+echo "----------------------------------------------------------"
+
 rm -rf /usr/local/bin/proxy_info
 mkdir /usr/local/bin/proxy_info
 
@@ -152,6 +157,10 @@ EOF
 
 #读取配置信息
 read_proxy_info(){
+
+echo "----------------------------------------------------------"
+echo "正在读取配置信息"
+echo "----------------------------------------------------------"
 
 get_user="$(cat /usr/local/bin/proxy_info/username)"
 
@@ -302,6 +311,10 @@ systemctl restart caddy
 #检测caddy是否运行
 chack_caddy(){
 
+echo "----------------------------------------------------------"
+echo "正在检测caddy进程"
+echo "----------------------------------------------------------"
+
 if [[ -e /usr/local/bin/caddy ]]; then
 
 status1_caddy="已安装"
@@ -331,6 +344,10 @@ fi
 #检测域名是否已解析
 check_domain(){
 
+echo "----------------------------------------------------------"
+echo "正在检测域名解析情况"
+echo "----------------------------------------------------------"
+
 local_ip=`curl -4 ip.sb`
 domain_ip=`ping ${domain} -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`
 
@@ -344,6 +361,7 @@ else
 status_domain="解析未生效 请将自定义域名A记录解析至 ${local_ip} 后重启caddy"
 
 fi
+
 }
 
 
@@ -401,6 +419,7 @@ else
     fi
 
 fi
+
 }
 
 
@@ -463,12 +482,14 @@ echo "${caddy_tips}"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
 echo "关联项目：https://c2ray.ml"
 echo ""
+
 }
 
 
 
 #命令执行列表
 main(){
+
 set_proxy_info
 storage_proxy_info
 install_caddy
@@ -477,6 +498,7 @@ auto_caddy
 website_caddy
 restart_caddy
 show_proxy_info
+
 }
 
 
@@ -513,8 +535,8 @@ echo "----------------------------------------------------------"
 echo ""
 echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
 echo ""
-exit
 
+exit
 fi
 
 
@@ -560,8 +582,8 @@ echo "如需要修改用户名密码 重复执行安装时相同的代码即可"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
 echo "关联项目：https://c2ray.ml"
 echo ""
-exit
 
+exit
 fi
 
 
@@ -681,7 +703,7 @@ bash <(curl -L -s git.io/a.sh) menu
 ;;
 
 4)
-bash <(curl -L -s git.io/a.sh) showinfo
+bash <(curl -L -s git.io/a.sh) info
 ;;
 
 5)
@@ -705,8 +727,8 @@ bash <(curl -L -s git.io/a.sh) menu
 ;;
 
 esac
-exit
 
+exit
 fi
 
 
@@ -759,8 +781,8 @@ elif [[ "${user}" == egg ]]; then
 
 bash <(curl -L -s git.io/a.sh)
 bash <(curl -L -s git.io/a.sh) egg
-exit
 
+exit
 fi
 
 
@@ -855,6 +877,7 @@ dns_cmd="dns_ali"
 #安装acme 使用dns模式申请证书
 getssl_with_dnsapi(){
 
+#记录ssl签发模式
 touch /usr/local/bin/proxy_info/ssl_acme
 cat <<EOF > /usr/local/bin/proxy_info/ssl_acme
 ssl_acme
@@ -879,11 +902,13 @@ echo "----------------------------------------------------------"
 
 curl https://get.acme.sh | sh
 
+#签发证书
 ./.acme.sh/acme.sh --issue --dns ${dns_cmd} -d ${domain}
 
 rm -rf /usr/local/bin/ssl_for_caddy
 mkdir /usr/local/bin/ssl_for_caddy
 
+#复制证书 设置自动续签
 ./.acme.sh/acme.sh --install-cert -d ${domain} --cert-file /usr/local/bin/ssl_for_caddy/${domain}.crt --key-file /usr/local/bin/ssl_for_caddy/${domain}.key --reloadcmd "systemctl restart caddy"
 
 }
@@ -906,6 +931,7 @@ else
 status_ssl="未安装（新增域名可能需要等待数分钟）"
 
 fi
+
 }
 
 
@@ -972,7 +998,6 @@ sed -i '/^tls/c\tls /usr/local/bin/ssl_for_caddy/'"${domain}"'.crt /usr/local/bi
 auto_caddy
 website_caddy
 restart_caddy
-
 
 chack_caddy
 check_domain
