@@ -542,7 +542,7 @@ fi
 
 
 #查看当前代理账号信息
-if [ "${user}" == info ]; then
+if [[ "${user}" == info ]] && [[ -e /usr/local/bin/Caddyfile ]]; then
 
 echo "----------------------------------------------------------"
 echo "开始读取"
@@ -582,6 +582,15 @@ echo "如需要修改用户名密码 重复执行安装时相同的代码即可"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
 echo "关联项目：https://c2ray.ml"
 echo ""
+exit
+
+elif [[ "${user}" == info ]]; then
+
+echo "----------------------------------------------------------"
+echo "未检测到 caddy 请先安装"
+echo "----------------------------------------------------------"
+
+bash <(curl -L -s git.io/a.sh) menu
 
 exit
 fi
