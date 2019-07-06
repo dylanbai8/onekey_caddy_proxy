@@ -205,7 +205,7 @@ caddy_tips="使用本机原有的 caddy 程序，如果代理不可用请先执�
 else
 
 echo "----------------------------------------------------------"
-echo "正在安装caddy主程序和代理相关插件"
+echo "正在安装caddy主程序和代理相关插件（约1分钟）"
 echo "----------------------------------------------------------"
 
 curl https://getcaddy.com | bash -s personal http.forwardproxy,http.proxyprotocol
@@ -545,7 +545,7 @@ fi
 if [ "${user}" == info ]; then
 
 echo "----------------------------------------------------------"
-echo "正在读取账号信息"
+echo "开始读取"
 echo "----------------------------------------------------------"
 
     if [[ -e /usr/local/bin/proxy_info/ssl_acme ]]; then
@@ -740,8 +740,17 @@ echo "----------------------------------------------------------"
 echo "正在安装彩蛋"
 echo "----------------------------------------------------------"
 
+    if [[ -e /usr/local/bin/proxy_info/ssl_acme ]]; then
+    chack_ssl_path=chack_dns_ssl
+    else
+    chack_ssl_path=chack_ssl
+    fi
+
 read_proxy_info
 chack_caddy
+
+domain="${get_domain}"
+${chack_ssl_path}
 
 rm -rf /www
 mkdir /www
@@ -759,7 +768,7 @@ echo ":: 基于 caddy 的 https(h2) 代理（自带website伪装网站）::"
 echo "----------------------------------------------------------"
 echo ""
 echo "彩蛋安装完成 打开伪装网站查看"
-echo "彩蛋地址：${get_domain}"
+echo "彩蛋地址：https://${get_domain}:${get_port}"
 echo ""
 echo "代理协议：https"
 echo ""
@@ -769,11 +778,13 @@ echo ""
 echo "用户名：${get_user}"
 echo "密码：${get_pass}"
 echo ""
-echo "关联项目：https://c2ray.ml"
-echo ""
 echo "----------------------------------------------------------"
 echo ""
 echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
+echo "当前ssl证书状态：${status_ssl}"
+echo ""
+echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
+echo "关联项目：https://c2ray.ml"
 echo ""
 exit
 
