@@ -382,12 +382,6 @@ fi
 #检测域名ssl证书
 chack_ssl(){
 
-echo ""
-echo "正在等待签发域名 SSL 证书"
-echo "----------------------------------------------------------"
-wait_ssl_procing
-echo "----------------------------------------------------------"
-
 echo "----------------------------------------------------------"
 echo "正在检测ssl证书情况"
 echo "----------------------------------------------------------"
@@ -398,6 +392,11 @@ status_ssl="已安装"
 
 else
 
+    ssl_get_status
+    if [[ -e ./.caddy/acme/acme-v02.api.letsencrypt.org/sites/${domain}/${domain}.key ]]; then
+    status_ssl="已安装"
+	fi
+
 status_ssl="未安装（新增域名可能需要等待数分钟）"
 
 fi
@@ -405,13 +404,29 @@ fi
 
 
 
-#输出进度条
-wait_ssl_procing(){
+ssl_get_status(){
 
-echo -en '[ #                    ]     05%\r'
-echo -en '[ ###################  ]     95%'
+i=0;
+str=""
+arr=("|" "/" "-" "\\")
+while [ $i -le 100 ]
+do
+  let index=i%4
+  let indexcolor=i%8
+  let color=30+indexcolor
+  printf "\e[0;$color;1m[%-100s][%d%%]%c\r" "$str" "$i" "${arr[$index]}"
+  sleep 0.8
+  let i++
+  str+='='
+done
+printf "\n"
+
+
+
 
 }
+
+
 
 
 
@@ -503,17 +518,23 @@ fi
 
 
 #查看当前代理账号信息
-if [ "${user}" == showinfo ]; then
+if [ "${user}" == info ]; then
 
 echo "----------------------------------------------------------"
 echo "正在读取账号信息"
 echo "----------------------------------------------------------"
 
+    if [[ -e /usr/local/bin/proxy_info/ssl_acme ]]; then
+    chack_ssl_path=chack_dns_ssl
+    else
+    chack_ssl_path=chack_ssl
+    fi
+
 read_proxy_info
 chack_caddy
 
 domain="${get_domain}"
-chack_ssl
+${chack_ssl_path}
 
 clear
 echo "----------------------------------------------------------"
@@ -531,6 +552,7 @@ echo ""
 echo "----------------------------------------------------------"
 echo ""
 echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
+echo "当前ssl证书状态：${status_ssl}"
 echo ""
 echo "如需要修改用户名密码 重复执行安装时相同的代码即可"
 echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
@@ -830,6 +852,11 @@ dns_cmd="dns_ali"
 
 #安装acme 使用dns模式申请证书
 getssl_with_dnsapi(){
+
+touch /usr/local/bin/proxy_info/ssl_acme
+cat <<EOF > /usr/local/bin/proxy_info/ssl_acme
+ssl_acme
+EOF
 
 ${set_dnsapi}
 
