@@ -41,7 +41,7 @@ bash <(curl -L -s git.io/a.sh) uninstall
 ## 查看当前代理账号信息
 
 ```
-bash <(curl -L -s git.io/a.sh) showinfo
+bash <(curl -L -s git.io/a.sh) info
 ```
 
 ## 菜单模式

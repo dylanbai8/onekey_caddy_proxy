@@ -392,42 +392,43 @@ status_ssl="已安装"
 
 else
 
+    echo "正在等待签发证书（约1分钟）"
     ssl_get_status
-	echo "正在等待签发证书（约1分钟）"
     if [[ -e ./.caddy/acme/acme-v02.api.letsencrypt.org/sites/${domain}/${domain}.key ]]; then
     status_ssl="已安装"
-	fi
-
-status_ssl="未安装（新增域名可能需要等待数分钟）"
+    else
+    status_ssl="未安装（新增域名可能需要等待数分钟）"
+    fi
 
 fi
 }
 
 
 
+#等待进度条
 ssl_get_status(){
 
-i=0;
-str=""
-arr=("|" "/" "-" "\\")
+index=0
+i=0
+bar=''
+label=('|' '\\' '-' '/')
 while [ $i -le 100 ]
 do
-  let index=i%4
-  let indexcolor=i%8
-  let color=30+indexcolor
-  printf "\e[0;$color;1m[%-100s][%d%%]%c\r" "$str" "$i" "${arr[$index]}"
-  sleep 1.5
-  let i++
-  str+='='
+    let index=i%4
+    let colour=30+$i%8
+    echo -en "\e[1;"$colour"m"
+    printf "[%-100s][%d%%][%c]\r" "$bar" "$i" "${label[$index]}"
+    let i++
+    sleep 1
+    bar+="■"
+    #bar+='□'
+    #bar+='#'
 done
-printf "\n"
 
-
-
+# 恢复颜色
+echo -e "\e[1;30;m"
 
 }
-
-
 
 
 
