@@ -108,6 +108,9 @@ Debian8 更新系统 安装必要软件：
 apt update -y
 apt install curl -y
 
+TCP/IP协议中一个IP地址的端口通过16bit进行编号最多可以有65536个端口
+在For [ Nat VPS ]中自定义端口时 取值应该在 1-65536 范围内
+
 强行释放被占用的端口 以80端口为例：
 
 CMD=`lsof -i:"80" | awk '{print $1}' | grep -v "COMMAND" | sort -u` && systemctl disable ${CMD} && systemctl stop ${CMD} && killall -9 ${CMD}
