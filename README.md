@@ -126,8 +126,8 @@ systemctl disable apache2
 脚本在执行卸载时并未删除已申请储存的域名证书（储存位置 /root/.caddy 或 /root/.acme.sh）。
 强制清除命令：rm -rf /root/.caddy 或 rm -rf /root/.acme.sh
 
-由于Let’s Encrypt官方的限制 当此脚本被大量使用时 SSL证书签发频次有可能超出限额
-如果遇到此情况 脚本自动生成的域名可能无法正常工作 你应当尝试使用自己的域名进行安装
+由于Let’s Encrypt官方的限制 当此脚本被大量使用时 脚本自带的根域名SSL证书签发频次有可能超出限额
+如果遇到此情况 脚本自动生成的域名可能无法正常工作 你应当更换使用自己的域名进行安装
 官方文档：https://letsencrypt.org/docs/rate-limits/
 ```
 
