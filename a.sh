@@ -108,7 +108,7 @@ echo `curl -4 ip.sb` >> local_ip.txt && sed -i "s/\./\-/g" "local_ip.txt"
 domain="$(cat local_ip.txt).${domain_root}" && rm -rf local_ip.txt
 fi
 
-stty erase '^H' && read -e -p "要伪装成的网站：" website
+stty erase '^H' && read -e -p "要伪装成的网站（默认请留空）：" website
 if [ ! ${website} ]; then
 set_website_num
 fi
