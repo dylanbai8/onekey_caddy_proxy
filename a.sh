@@ -865,7 +865,7 @@ set_dnspod_dnsapi(){
 clear
 echo ""
 echo "按照提示依次设置 腾讯/DNSPod（国内版）DNS API 接口"
-echo "接口申请地址：https://console.cloud.tencent.com/cam/capi"
+echo "接口申请地址：https://www.dnspod.cn/console/user/security"
 echo ""
 
 stty erase '^H' && read -e -p "设置 DP_Id 请输入：" DP_Id
@@ -917,12 +917,6 @@ dns_cmd="dns_ali"
 
 #安装acme 使用dns模式申请证书
 getssl_with_dnsapi(){
-
-#记录ssl签发模式
-touch /usr/local/bin/proxy_info/ssl_acme
-cat <<EOF > /usr/local/bin/proxy_info/ssl_acme
-ssl_acme
-EOF
 
 ${set_dnsapi}
 
@@ -1034,7 +1028,14 @@ storage_proxy_info
 install_caddy
 config_caddy
 
+#修正Caddyfile
 sed -i '/^tls/c\tls /usr/local/bin/ssl_for_caddy/'"${domain}"'.crt /usr/local/bin/ssl_for_caddy/'"${domain}"'.key' /usr/local/bin/Caddyfile
+
+#记录ssl签发模式
+touch /usr/local/bin/proxy_info/ssl_acme
+cat <<EOF > /usr/local/bin/proxy_info/ssl_acme
+ssl_acme
+EOF
 
 auto_caddy
 website_caddy
