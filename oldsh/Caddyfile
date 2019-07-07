@@ -1,0 +1,9 @@
+103-1-14-203.ip.c2ray.ml:443 {
+tls admin@103-1-14-203.ip.c2ray.ml
+root /www
+gzip
+index index.html
+forwardproxy {
+    basicauth admin cc18988e
+}
+}
