@@ -638,6 +638,10 @@ if [ ! ${pass} ]; then
 pass=`cat /dev/urandom | head -n 10 | md5sum | head -c 8`
 fi
 
+echo "----------------------------------------------------------"
+echo "正在将新账号写入配置文件"
+echo "----------------------------------------------------------"
+
 touch /usr/local/bin/proxy_info/username
 cat <<EOF > /usr/local/bin/proxy_info/username
 ${user}
