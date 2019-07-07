@@ -600,6 +600,8 @@ fi
 #修改用户名密码
 reset_password(){
 
+if [[ -e /usr/local/bin/Caddyfile ]]; then
+
 echo ""
 echo "按照提示依次重设代理的用户名密码"
 echo "如使用默认值（或随机值） 请留空 直接按回车"
@@ -657,6 +659,14 @@ echo "安装路径：/usr/local/bin/ [caddy] [Caddyfile]"
 echo "关联项目：https://c2ray.ml"
 echo ""
 
+else
+
+echo "----------------------------------------------------------"
+echo "未检测到 caddy 请先安装"
+echo "----------------------------------------------------------"
+
+bash <(curl -L -s git.io/a.sh) menu
+
 }
 
 
@@ -702,12 +712,18 @@ bash <(curl -L -s git.io/a.sh) ${user} ${pass} ${domain} ${website}
 ;;
 
 3)
+if [[ -e /usr/local/bin/Caddyfile ]]; then
 systemctl restart caddy
 clear
 echo "----------------------------------------------------------"
 echo "已重启caddy进程 [5]秒钟后返回开始菜单"
 echo "----------------------------------------------------------"
 sleep 5
+bash <(curl -L -s git.io/a.sh) menu
+else
+echo "----------------------------------------------------------"
+echo "未检测到 caddy 请先安装"
+echo "----------------------------------------------------------"
 bash <(curl -L -s git.io/a.sh) menu
 ;;
 
