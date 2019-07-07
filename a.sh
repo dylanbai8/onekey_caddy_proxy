@@ -424,6 +424,27 @@ fi
 
 
 
+#检测域名dns ssl证书
+chack_dns_ssl(){
+
+echo "----------------------------------------------------------"
+echo "正在检测ssl证书情况"
+echo "----------------------------------------------------------"
+
+if [[ -e /usr/local/bin/ssl_for_caddy/${domain}.key ]]; then
+
+status_ssl="已安装"
+
+else
+
+status_ssl="未安装（新增域名可能需要等待数分钟）"
+
+fi
+
+}
+
+
+
 #等待进度条
 ssl_get_status(){
 
@@ -945,27 +966,6 @@ mkdir /usr/local/bin/ssl_for_caddy
 
 #复制证书 设置自动续签
 ./.acme.sh/acme.sh --install-cert -d ${domain} --cert-file /usr/local/bin/ssl_for_caddy/${domain}.crt --key-file /usr/local/bin/ssl_for_caddy/${domain}.key --reloadcmd "systemctl restart caddy"
-
-}
-
-
-
-#检测域名dns ssl证书
-chack_dns_ssl(){
-
-echo "----------------------------------------------------------"
-echo "正在检测ssl证书情况"
-echo "----------------------------------------------------------"
-
-if [[ -e /usr/local/bin/ssl_for_caddy/${domain}.key ]]; then
-
-status_ssl="已安装"
-
-else
-
-status_ssl="未安装（新增域名可能需要等待数分钟）"
-
-fi
 
 }
 
