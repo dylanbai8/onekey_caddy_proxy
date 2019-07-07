@@ -120,7 +120,6 @@ check_port
 
 
 
-
 #储存配置信息
 storage_proxy_info(){
 
