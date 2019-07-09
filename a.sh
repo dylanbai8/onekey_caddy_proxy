@@ -1081,25 +1081,25 @@ fi
 #高级伪装
 proxy_mask_pro(){
 
-
 if [[ -e /usr/local/bin/Caddyfile ]]; then
 
 echo ""
-echo "正在生成伪装配置"
+echo "正在生成高级伪装配置"
 echo ""
 
 read_proxy_info
 
 pac_path=`cat /dev/urandom | head -n 10 | md5sum | head -c 8`
 
-wget https://raw.githubusercontent.com/petronny/gfwlist2pac/master/gfwlist.pac
+wget -N --no-check-certificate https://raw.githubusercontent.com/petronny/gfwlist2pac/master/gfwlist.pac
 
-rm -rf /www/${pac_path}
-mkdir /www/${pac_path}
+rm -rf /www/s
+mkdir /www/s
+mkdir /www/s/${pac_path}
 
-mv ./gfwlist.pac /www/${pac_path}/auto_proxy.pac
-sed -i "/^var proxy/c\var proxy = 'HTTPS "${get_domain}":"${get_port}"';" /www/${pac_path}/auto_proxy.pac
-sed -i '/^            "google.com",/c\            "google.com",\n            "'"${pac_path}"'.'"${get_domain}"'",' /www/${pac_path}/auto_proxy.pac
+mv ./gfwlist.pac /www/s/${pac_path}/auto_proxy.pac
+sed -i "/^var proxy/c\var proxy = 'HTTPS "${get_domain}":"${get_port}"';" /www/s/${pac_path}/auto_proxy.pac
+sed -i '/^            "google.com",/c\            "google.com",\n            "'"${pac_path}"'.'"${get_domain}"'",' /www/s/${pac_path}/auto_proxy.pac
 
 echo "----------------------------------------------------------"
 echo "正在写入 Caddyfile"
@@ -1107,6 +1107,10 @@ echo "----------------------------------------------------------"
 
     if [[ -e /usr/local/bin/proxy_info/ssl_acme ]]; then
     chack_ssl_path=chack_dns_ssl
+
+echo "----------------------------------------------------------"
+echo "正在写入 ssl based on acme.sh"
+echo "----------------------------------------------------------"
 
 touch /usr/local/bin/Caddyfile
 
@@ -1121,7 +1125,7 @@ forwardproxy {
     hide_ip
     hide_via
     probe_resistance ${pac_path}.{get_domain}
-    serve_pac        /www/${pac_path}/all_proxy.pac
+    serve_pac        /s/${pac_path}/all_proxy.pac
     response_timeout 30
     dial_timeout     30
 }
@@ -1130,6 +1134,10 @@ EOF
 
     else
     chack_ssl_path=chack_ssl
+
+echo "----------------------------------------------------------"
+echo "正在写入 ssl based on caddy"
+echo "----------------------------------------------------------"
 
 touch /usr/local/bin/Caddyfile
 
@@ -1144,7 +1152,7 @@ forwardproxy {
     hide_ip
     hide_via
     probe_resistance ${pac_path}.${get_domain}
-    serve_pac        /${pac_path}/all_proxy.pac
+    serve_pac        /s/${pac_path}/all_proxy.pac
     response_timeout 30
     dial_timeout     30
 }
@@ -1181,14 +1189,18 @@ echo ""
 echo "用户名：${get_user}"
 echo "密码：${get_pass}"
 echo ""
+echo "注意：以下信息只显示一次！！"
+echo ""
+echo "伪装网站：https://${get_domain}:${get_port}"
+echo ""
 echo "认证地址：https://${pac_path}.${get_domain}"
 echo ""
-echo "全局 PAC ：https://${get_domain}/${pac_path}/all_proxy.pac"
-echo "智能 PAC ：https://${get_domain}/${pac_path}/auto_proxy.pac"
+echo "全局 PAC ：https://${get_domain}:${get_port}/s/${pac_path}/all_proxy.pac"
+echo "智能 PAC ：https://${get_domain}:${get_port}/s/${pac_path}/auto_proxy.pac"
 echo ""
 echo "----------------------------------------------------------"
 echo ""
-echo "注意：设置完成“代理服务器”或者“PAC(即自动配置脚本)”后需要浏览器首先访问“认证地址”完成认证"
+echo "注意：使用时电脑或手机设置完成“代理服务器”或者“PAC(即自动配置脚本)”后需要浏览器首先访问“认证地址”完成认证"
 echo ""
 echo "当前caddy状态：[${status1_caddy}]-[${status2_caddy}]"
 echo "当前ssl证书状态：${status_ssl}"
