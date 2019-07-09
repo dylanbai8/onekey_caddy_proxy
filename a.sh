@@ -1143,8 +1143,8 @@ forwardproxy {
     basicauth ${get_user} ${get_pass}
     hide_ip
     hide_via
-    probe_resistance ${pac_path}.{get_domain}
-    serve_pac        /www/${pac_path}/all_proxy.pac
+    probe_resistance ${pac_path}.${get_domain}
+    serve_pac        /${pac_path}/all_proxy.pac
     response_timeout 30
     dial_timeout     30
 }
@@ -1181,10 +1181,10 @@ echo ""
 echo "用户名：${get_user}"
 echo "密码：${get_pass}"
 echo ""
-echo "认证地址：https://${pac_path}.{get_domain}"
+echo "认证地址：https://${pac_path}.${get_domain}"
 echo ""
-echo "全局 PAC ：https://{get_domain}/${pac_path}/all_proxy.pac"
-echo "智能 PAC ：https://{get_domain}/${pac_path}/auto_proxy.pac"
+echo "全局 PAC ：https://${get_domain}/${pac_path}/all_proxy.pac"
+echo "智能 PAC ：https://${get_domain}/${pac_path}/auto_proxy.pac"
 echo ""
 echo "----------------------------------------------------------"
 echo ""
