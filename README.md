@@ -1,4 +1,4 @@
-## ▶一键搭建基于 caddy 的 https(h2) 代理 ■ ◉ ▞ ▷ ▢
+## ▞ 一键搭建基于 caddy 的 https(h2) 代理
 
 注意：安装过程中需要保证80端口443端口开放并未被占用（自动申请ssl证书 SSL自动续期 自带website伪装网站）
 
@@ -56,7 +56,7 @@ bash <(curl -L -s git.io/a.sh) info
 bash <(curl -L -s git.io/a.sh) egg
 ```
 
-## ▶For [ Nat VPS ] 无80端口搭建基于 caddy 的 https(h2) 代理
+## ▞ For [ Nat VPS ] 无80端口搭建基于 caddy 的 https(h2) 代理
 
 通过 DNS API 模式申请 Let’s Encrypt 证书 无需 80 端口 适用于 Nat VPS
 
@@ -78,13 +78,13 @@ bash <(curl -L -s git.io/a.sh) natvps
 - Android:    ProxyDroid、Postern 等，配置方式大同小异。
 ```
 
-## ▶菜单模式
+## ▞ 菜单模式
 
 ```
 bash <(curl -L -s git.io/a.sh) menu
 ```
 
-## ▶可能用到的命令
+## ▞ 可能用到的命令
 
 ```
 所有指令假设已在 su 环境下，如果不是，请先运行 sudo su
