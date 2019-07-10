@@ -50,17 +50,15 @@ bash <(curl -L -s git.io/a.sh) uninstall
 bash <(curl -L -s git.io/a.sh) info
 ```
 
-## 菜单模式
-
-```
-bash <(curl -L -s git.io/a.sh) menu
-```
-
 ## 彩蛋
 
 ```
 bash <(curl -L -s git.io/a.sh) egg
 ```
+
+
+::::::::::::::::::::::::::::::分:::割:::线::::::::::::::::::::::::::::::
+
 
 ## For [ Nat VPS ] 无80端口一键搭建基于 caddy 的 https(h2) 代理
 
@@ -82,6 +80,12 @@ bash <(curl -L -s git.io/a.sh) natvps
 - Firefox:    Foxyproxy 插件，配置方式大同小异。
 - IOS:        SURGE 等，代理类型选择HTTPS，配置方式大同小异。
 - Android:    ProxyDroid、Postern 等，配置方式大同小异。
+```
+
+## 菜单模式
+
+```
+bash <(curl -L -s git.io/a.sh) menu
 ```
 
 ## 可能用到的命令
