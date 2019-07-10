@@ -126,6 +126,11 @@ Debian8 关闭 apache2 ：
 systemctl stop apache2
 systemctl disable apache2
 
+关于智能PAC ：
+IE和Edge对https代理支持并不好，推荐使用 [ Chrome + ProxySwitchyOmega + auto_proxy.pac ]
+如果 auto_proxy.pac 出错可以尝试使用 auto_proxy.txt
+PAC来自 https://github.com/petronny/gfwlist2pac 感谢作者维护
+
 其它：
 
 为节省Let’s Encrypt公共资源，减少没必要的重复证书申请，
