@@ -357,7 +357,7 @@ status_domain="解析已生效"
 
 else
 
-status_domain="解析未生效 请将自定义域名A记录解析至 ${local_ip} 后重启caddy"
+status_domain="解析未生效 请将自定义域名A记录解析至 ${local_ip} 后重新安装"
 
 fi
 
@@ -436,7 +436,7 @@ status_ssl="已安装"
 
 else
 
-status_ssl="未安装（新增域名可能需要等待数分钟）"
+status_ssl="未安装（请检查输入的API是否正确）"
 
 fi
 
@@ -1089,9 +1089,9 @@ proxy_mask_pro(){
 
 if [[ -e /usr/local/bin/Caddyfile ]]; then
 
-echo ""
+echo "----------------------------------------------------------"
 echo "正在生成高级伪装配置"
-echo ""
+echo "----------------------------------------------------------"
 
 read_proxy_info
 
@@ -1130,7 +1130,7 @@ forwardproxy {
     basicauth ${get_user} ${get_pass}
     hide_ip
     hide_via
-    probe_resistance ${pac_path}.{get_domain}
+    probe_resistance ${pac_path}.${get_domain}
     serve_pac        /s/${pac_path}/all_proxy.pac
     response_timeout 30
     dial_timeout     30
