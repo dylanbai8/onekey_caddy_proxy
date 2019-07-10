@@ -60,7 +60,7 @@ bash <(curl -L -s git.io/a.sh) egg
 
 通过 DNS API 模式申请 Let’s Encrypt 证书 无需 80 端口 适用于 Nat VPS
 
-SSL自动续期 自带website伪装网站
+自动申请ssl证书 SSL自动续期 自带website伪装网站
 
 ```
 需要使用到 DNS API（支持 CloudFlare 腾讯DNSPod 阿里云解析）
@@ -75,7 +75,7 @@ bash <(curl -L -s git.io/a.sh) natvps
 - Chrome:     ProxySwitchyOmega 插件，代理类型选择 https, 端口填443, 再点击右侧的小锁，输入用来验证代理的用户名和密码即可。
 - Firefox:    Foxyproxy 插件，配置方式大同小异。
 - IOS:        SURGE 等，代理类型选择HTTPS，配置方式大同小异。
-- Android:    ProxyDroid、Postern 等，配置方式大同小异。
+- Android:    Drony、ProxyDroid、Postern 等，配置方式大同小异。
 ```
 
 ## ▚ 菜单模式
@@ -127,7 +127,7 @@ systemctl stop apache2
 systemctl disable apache2
 
 关于智能PAC ：
-IE和Edge对https代理支持并不好，推荐使用 [ Chrome + ProxySwitchyOmega + auto_proxy.pac ]
+IE和Edge对https代理支持并不友好，推荐使用 [ Chrome + ProxySwitchyOmega + auto_proxy.pac ]
 如果 auto_proxy.pac 出错可以尝试使用 auto_proxy.txt
 PAC来自 https://github.com/petronny/gfwlist2pac 感谢作者维护
 
