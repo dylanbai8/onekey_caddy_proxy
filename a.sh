@@ -711,14 +711,16 @@ echo ""
 echo "1.全自动一键安装（随机密码 自动临时域名 随机伪装站点）"
 echo "2.自定义一键安装（自定义账号密码 自定义域名 自定义伪装站点）"
 echo ""
-echo "3.重启caddy"
-echo "4.查看当前代理账号信息"
+echo "3.开启高级伪装抵御探测（独立认证页）、生成智能路由PAC"
 echo ""
-echo "5.修改用户名密码"
-echo "6.一键卸载"
+echo "4.重启caddy"
+echo "5.查看当前代理账号信息"
 echo ""
-echo "7.彩蛋"
-echo "8.退出"
+echo "6.修改用户名密码"
+echo "7.一键卸载"
+echo ""
+echo "8.彩蛋"
+echo "9.退出"
 echo ""
 echo "----------------------------------------------------------"
 echo ""
@@ -739,13 +741,17 @@ bash <(curl -L -s git.io/a.sh) ${user} ${pass} ${domain} ${website}
 ;;
 
 3)
+bash <(curl -L -s git.io/a.sh) pro
+;;
+
+4)
 if [[ -e /usr/local/bin/Caddyfile ]]; then
 systemctl restart caddy
 clear
 echo "----------------------------------------------------------"
 echo "已重启caddy进程 [5]秒钟后返回开始菜单"
 echo "----------------------------------------------------------"
-sleep 5
+sleep 3
 bash <(curl -L -s git.io/a.sh) menu
 else
 clear
@@ -756,23 +762,23 @@ bash <(curl -L -s git.io/a.sh) menu
 fi
 ;;
 
-4)
+5)
 bash <(curl -L -s git.io/a.sh) info
 ;;
 
-5)
+6)
 reset_password
 ;;
 
-6)
+7)
 bash <(curl -L -s git.io/a.sh) uninstall
 ;;
 
-7)
+8)
 bash <(curl -L -s git.io/a.sh) egg
 ;;
 
-8)
+9)
 exit
 ;;
 
@@ -1190,7 +1196,7 @@ echo ""
 echo "注意：以下信息只显示一次！！ PAC储存在web随机路径 且不含用户名密码 请放心使用！"
 echo ""
 echo "伪装网站：https://${get_domain}:${get_port}"
-echo "认证地址：https://${pac_path}.${get_domain}"
+echo "认证地址：http://${pac_path}.${get_domain}"
 echo "全局 PAC ：https://${get_domain}:${get_port}/s/${pac_path}/all_proxy.pac"
 echo "智能 PAC ：https://${get_domain}:${get_port}/s/${pac_path}/auto_proxy.pac"
 echo ""

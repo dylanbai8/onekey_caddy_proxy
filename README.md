@@ -32,6 +32,12 @@ bash <(curl -L -s git.io/a.sh) admin 888888 www.yourdomian.com
 
 ```
 
+## 开启高级伪装抵御探测（独立认证页）、生成智能路由PAC
+
+```
+bash <(curl -L -s git.io/a.sh) pro
+```
+
 ## 一键卸载
 
 ```
