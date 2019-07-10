@@ -56,9 +56,6 @@ bash <(curl -L -s git.io/a.sh) info
 bash <(curl -L -s git.io/a.sh) egg
 ```
 
-## ============= 分 割 线 ==============
-
-
 # For [ Nat VPS ] 无80端口搭建基于 caddy 的 https(h2) 代理
 
 通过 DNS API 模式申请 Let’s Encrypt 证书 无需 80 端口 适用于 Nat VPS
@@ -81,7 +78,7 @@ bash <(curl -L -s git.io/a.sh) natvps
 - Android:    ProxyDroid、Postern 等，配置方式大同小异。
 ```
 
-## 菜单模式
+# 菜单模式
 
 ```
 bash <(curl -L -s git.io/a.sh) menu
